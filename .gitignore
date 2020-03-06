@@ -1,0 +1,8 @@
+worldvision-7-sa.json
+config.properties
+*.iml
+out/
+target/
+.idea/
+logs
+*.log
