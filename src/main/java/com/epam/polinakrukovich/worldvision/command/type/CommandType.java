@@ -7,8 +7,7 @@ package com.epam.polinakrukovich.worldvision.command.type;
  */
 public class CommandType {
     public static final String USER_CREATE = "/user/create";
-    public static final String USER_READ = "/user/read";
-    public static final String USER_UPDATE = "/user/update";
+    public static final String USER_VERIFY = "/user/verify";
     public static final String USER_DELETE = "/user/delete";
     public static final String IMAGE_CREATE = "/image/create";
     public static final String IMAGE_LIST_USER = "/image/list/user";

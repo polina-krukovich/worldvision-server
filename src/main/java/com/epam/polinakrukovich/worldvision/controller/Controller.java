@@ -2,7 +2,7 @@ package com.epam.polinakrukovich.worldvision.controller;
 
 import com.epam.polinakrukovich.worldvision.command.Command;
 import com.epam.polinakrukovich.worldvision.command.exception.CommandException;
-import com.epam.polinakrukovich.worldvision.command.factory.CommandFactory;
+import com.epam.polinakrukovich.worldvision.command.provider.CommandProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * The main and only application servlet. Receives all requests and
- * uses {@link CommandFactory} to determine which command to execute.
+ * uses {@link CommandProvider} to determine which command to execute.
  *
  * @see HttpServletRequest
  * @see HttpServletResponse
- * @see CommandFactory
+ * @see CommandProvider
  *
  * @author Polina Krukovich
  */
@@ -39,11 +39,14 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            Command command = CommandFactory.createCommand(req.getRequestURI());
-            command.execute(req, resp);
-        } catch (CommandException e) {
-            logger.error(e.getMessage());
+        CommandProvider provider = CommandProvider.getInstance();
+        Command command = provider.getCommand(req.getRequestURI());
+        if (null != command) {
+            try {
+                command.execute(req, resp);
+            } catch (CommandException e) {
+                logger.error(e.getMessage());
+            }
         }
     }
 }

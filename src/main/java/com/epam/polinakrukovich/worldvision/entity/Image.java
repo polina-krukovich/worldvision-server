@@ -2,7 +2,6 @@ package com.epam.polinakrukovich.worldvision.entity;
 
 import com.google.api.client.util.DateTime;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,33 +11,28 @@ import java.util.Objects;
  */
 public class Image {
     private int id;
-    private String userUid;
+    private int userId;
     private String url;
     private int likesCount;
     private int downloadsCount;
     private DateTime creationTime;
-    private List<String> likedUserUids;
-    private List<String> downloadedUserUids;
 
-    public Image(int id, String userUid, String url, int likesCount,
-                 int downloadsCount, DateTime creationTime,
-                 List<String> likedUserUids, List<String> downloadedUserUids) {
+    public Image(int id, int userId, String url, int likesCount,
+                 int downloadsCount, DateTime creationTime) {
         this.id = id;
-        this.userUid = userUid;
+        this.userId = userId;
         this.url = url;
         this.likesCount = likesCount;
         this.downloadsCount = downloadsCount;
         this.creationTime = creationTime;
-        this.likedUserUids = likedUserUids;
-        this.downloadedUserUids = downloadedUserUids;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getUserUid() {
-        return userUid;
+    public int getUserId() {
+        return userId;
     }
 
     public String getUrl() {
@@ -57,20 +51,12 @@ public class Image {
         return creationTime;
     }
 
-    public List<String> getLikedUserUids() {
-        return likedUserUids;
-    }
-
-    public List<String> getDownloadedUserUids() {
-        return downloadedUserUids;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setUserUid(String userUid) {
-        this.userUid = userUid;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setUrl(String url) {
@@ -89,29 +75,18 @@ public class Image {
         this.creationTime = creationTime;
     }
 
-    public void setLikedUserUids(List<String> likedUserUids) {
-        this.likedUserUids = likedUserUids;
-    }
-
-    public void setDownloadedUserUids(List<String> downloadedUserUids) {
-        this.downloadedUserUids = downloadedUserUids;
-    }
-
     @Override
     public java.lang.String toString() {
         return java.lang.String.format(
                 "%s {" +
                         "id: %d, " +
-                        "userUid: %s, " +
+                        "userId: %d, " +
                         "url: %s, " +
                         "likesCount: %d, " +
                         "downloadsCount: %d, " +
-                        "creationTime: %s, " +
-                        "likedUserUids: %s, " +
-                        "downloadedUserUids: %s}",
-                getClass().getSimpleName(), id, userUid, url,
-                likesCount, downloadsCount, creationTime,
-                likedUserUids, downloadedUserUids);
+                        "creationTime: %s}",
+                getClass().getSimpleName(), id, userId, url,
+                likesCount, downloadsCount, creationTime);
     }
 
     @Override
@@ -126,16 +101,14 @@ public class Image {
         return id == image.id &&
                 likesCount == image.likesCount &&
                 downloadsCount == image.downloadsCount &&
-                Objects.equals(userUid, image.userUid) &&
+                Objects.equals(userId, image.userId) &&
                 Objects.equals(url, image.url) &&
-                Objects.equals(creationTime, image.creationTime) &&
-                Objects.equals(likedUserUids, image.likedUserUids) &&
-                Objects.equals(downloadedUserUids, image.downloadedUserUids);
+                Objects.equals(creationTime, image.creationTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userUid, url, likesCount, downloadsCount,
-                creationTime, likedUserUids, downloadedUserUids);
+        return Objects.hash(id, userId, url, likesCount,
+                downloadsCount, creationTime);
     }
 }
