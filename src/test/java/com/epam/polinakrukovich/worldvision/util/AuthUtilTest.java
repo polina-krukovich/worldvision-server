@@ -5,14 +5,15 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class AuthUtilTest {
+    private AuthUtil authUtil = new AuthUtil();
 
     @Test
     public void testAuthUtil_FirebaseAppInitialization() {
-        assertNotEquals(new AuthUtil().firebaseApp, null);
+        assertNotNull(authUtil.firebaseApp);
     }
 
     @Test
     public void testAuthUtil_FirebaseAuthInitialization() {
-        assertNotEquals(new AuthUtil().firebaseAuth, null);
+        assertNotNull(authUtil.firebaseAuth);
     }
 }

@@ -1,18 +1,15 @@
 package com.epam.polinakrukovich.worldvision.util;
 
 import com.epam.polinakrukovich.worldvision.config.Config;
+import com.epam.polinakrukovich.worldvision.util.exception.UtilException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * {@link ConnectionPoolUtil} class provides the minimal functionality expected from
@@ -34,12 +31,31 @@ public class ConnectionPoolUtil {
     }
 
     private final Logger logger = LogManager.getLogger();
-    private final int INITIAL_POOL_SIZE = 10;
+    private final ReentrantLock lock = new ReentrantLock();
     private List<Connection> connectionPool = new ArrayList<>();
     private List<Connection> usedConnections = new ArrayList<>();
-    private String dbUrl = "";
-    private String dbUser = "";
-    private String dbPassword = "";
+    private String dbUrl;
+    private String dbUser;
+    private String dbPassword;
+
+    /**
+     * Constructs and initializes the {@link ConnectionPoolUtil} object
+     * based on configuration properties stored in {@link Config}.
+     */
+    private ConnectionPoolUtil() {
+        Config config = Config.getInstance();
+        dbUrl = config.getDbUrl();
+        dbUser = config.getDbUser();
+        dbPassword = config.getDbPassword();
+        int initialPoolSize = config.getDbConnectionPoolInitialSize();
+        for (int i = 0; i < initialPoolSize; i++) {
+            try {
+                connectionPool.add(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+            }
+        }
+    }
 
     public static ConnectionPoolUtil getInstance() {
         return SingletonHolder.instance;
@@ -58,44 +74,27 @@ public class ConnectionPoolUtil {
     }
 
     /**
-     * Constructs and initializes the {@link ConnectionPoolUtil} object based on
-     * configuration properties stored in "config.properties" file.
-     */
-    private ConnectionPoolUtil() {
-        File configFile = new File(Config.CONFIG_FILE_NAME);
-        try (FileReader reader = new FileReader(configFile)) {
-            Properties props = new Properties();
-            props.load(reader);
-            dbUrl = props.getProperty("dbUrl");
-            dbPassword = props.getProperty("dbPassword");
-            dbUser = props.getProperty("dbUser");
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
-
-        for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
-            try {
-                connectionPool.add(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
-            } catch (SQLException e) {
-                logger.error(e.getMessage());
-            }
-        }
-    }
-
-    /**
      * Retrieves pooled connection. If pool is empty, creates a new one.
      *
      * @return {@link Connection} object.
-     * @throws SQLException if creation of a new connection using
+     * @throws UtilException if creation of a new connection using
      * {@link DriverManager#getConnection(String, String, String)} fails.
      */
-    public Connection getConnection() throws SQLException {
-        if (connectionPool.isEmpty()) {
-            connectionPool.add(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
+    public Connection getConnection() throws UtilException {
+        lock.lock();
+        try {
+            if (connectionPool.isEmpty()) {
+                connectionPool.add(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
+            }
+            Connection connection = connectionPool.remove(connectionPool.size() - 1);
+            usedConnections.add(connection);
+            return connection;
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new UtilException(e.getMessage());
+        } finally {
+            lock.unlock();
         }
-        Connection connection = connectionPool.remove(connectionPool.size() - 1);
-        usedConnections.add(connection);
-        return connection;
     }
 
     /**
@@ -105,21 +104,36 @@ public class ConnectionPoolUtil {
      * @param connection {@link Connection} to release.
      */
     public void releaseConnection (Connection connection) {
-        usedConnections.remove(connection);
-        connectionPool.add(connection);
+        lock.lock();
+        try {
+            usedConnections.remove(connection);
+            connectionPool.add(connection);
+        } finally {
+            lock.unlock();
+        }
     }
 
     /**
      * Realizes all the used connections and closes connections from
      * connection pool.
      *
-     * @throws SQLException if failed to close the connection.
+     * @throws UtilException if failed to close the connection.
      */
-    public void shutdown() throws SQLException{
-        usedConnections.forEach(this::releaseConnection);
-        for (Connection connection : connectionPool) {
-            connection.close();
+    public void shutdown() throws UtilException {
+        lock.lock();
+        try {
+            usedConnections.forEach(this::releaseConnection);
+            for (Connection connection : connectionPool) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    logger.error(e.getMessage());
+                    throw new UtilException(e.getMessage());
+                }
+            }
+            connectionPool.clear();
+        } finally {
+            lock.unlock();
         }
-        connectionPool.clear();
     }
 }

@@ -12,33 +12,33 @@ import java.util.Objects;
  */
 public class Image {
     private int id;
-    private User user;
+    private String userUid;
     private String url;
     private int likesCount;
     private int downloadsCount;
     private DateTime creationTime;
-    private List<User> likedUsers;
-    private List<User> downloadedUsers;
+    private List<String> likedUserUids;
+    private List<String> downloadedUserUids;
 
-    public Image(int id, User user, String url, int likesCount,
+    public Image(int id, String userUid, String url, int likesCount,
                  int downloadsCount, DateTime creationTime,
-                 List<User> likedUsers, List<User> downloadedUsers) {
+                 List<String> likedUserUids, List<String> downloadedUserUids) {
         this.id = id;
-        this.user = user;
+        this.userUid = userUid;
         this.url = url;
         this.likesCount = likesCount;
         this.downloadsCount = downloadsCount;
         this.creationTime = creationTime;
-        this.likedUsers = likedUsers;
-        this.downloadedUsers = downloadedUsers;
+        this.likedUserUids = likedUserUids;
+        this.downloadedUserUids = downloadedUserUids;
     }
 
     public int getId() {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserUid() {
+        return userUid;
     }
 
     public String getUrl() {
@@ -57,20 +57,20 @@ public class Image {
         return creationTime;
     }
 
-    public List<User> getLikedUsers() {
-        return likedUsers;
+    public List<String> getLikedUserUids() {
+        return likedUserUids;
     }
 
-    public List<User> getDownloadedUsers() {
-        return downloadedUsers;
+    public List<String> getDownloadedUserUids() {
+        return downloadedUserUids;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
     }
 
     public void setUrl(String url) {
@@ -89,29 +89,29 @@ public class Image {
         this.creationTime = creationTime;
     }
 
-    public void setLikedUsers(List<User> likedUsers) {
-        this.likedUsers = likedUsers;
+    public void setLikedUserUids(List<String> likedUserUids) {
+        this.likedUserUids = likedUserUids;
     }
 
-    public void setDownloadedUsers(List<User> downloadedUsers) {
-        this.downloadedUsers = downloadedUsers;
+    public void setDownloadedUserUids(List<String> downloadedUserUids) {
+        this.downloadedUserUids = downloadedUserUids;
     }
 
     @Override
-    public String toString() {
-        return String.format(
+    public java.lang.String toString() {
+        return java.lang.String.format(
                 "%s {" +
                         "id: %d, " +
-                        "user: %s, " +
+                        "userUid: %s, " +
                         "url: %s, " +
                         "likesCount: %d, " +
                         "downloadsCount: %d, " +
                         "creationTime: %s, " +
-                        "likedUsers: %s, " +
-                        "downloadedUsers: %s}",
-                getClass().getSimpleName(), id, user, url,
+                        "likedUserUids: %s, " +
+                        "downloadedUserUids: %s}",
+                getClass().getSimpleName(), id, userUid, url,
                 likesCount, downloadsCount, creationTime,
-                likedUsers, downloadedUsers);
+                likedUserUids, downloadedUserUids);
     }
 
     @Override
@@ -126,16 +126,16 @@ public class Image {
         return id == image.id &&
                 likesCount == image.likesCount &&
                 downloadsCount == image.downloadsCount &&
-                Objects.equals(user, image.user) &&
+                Objects.equals(userUid, image.userUid) &&
                 Objects.equals(url, image.url) &&
                 Objects.equals(creationTime, image.creationTime) &&
-                Objects.equals(likedUsers, image.likedUsers) &&
-                Objects.equals(downloadedUsers, image.downloadedUsers);
+                Objects.equals(likedUserUids, image.likedUserUids) &&
+                Objects.equals(downloadedUserUids, image.downloadedUserUids);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, url, likesCount, downloadsCount,
-                creationTime, likedUsers, downloadedUsers);
+        return Objects.hash(id, userUid, url, likesCount, downloadsCount,
+                creationTime, likedUserUids, downloadedUserUids);
     }
 }

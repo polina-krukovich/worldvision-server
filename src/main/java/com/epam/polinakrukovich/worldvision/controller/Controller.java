@@ -10,6 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * The main and only application servlet. Receives all requests and
+ * uses {@link CommandFactory} to determine which command to execute.
+ *
+ * @see HttpServletRequest
+ * @see HttpServletResponse
+ * @see CommandFactory
+ *
+ * @author Polina Krukovich
+ */
 public class Controller extends HttpServlet {
     private final Logger logger = LogManager.getLogger(getClass());
 

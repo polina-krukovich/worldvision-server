@@ -13,19 +13,19 @@
   <!-- users -->
   <servlet-mapping>
     <servlet-name>controller</servlet-name>
-    <url-pattern>/user/create</url-pattern>
+    <url-pattern>/string/create</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>controller</servlet-name>
-    <url-pattern>/user/read</url-pattern>
+    <url-pattern>/string/read</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>controller</servlet-name>
-    <url-pattern>/user/update</url-pattern>
+    <url-pattern>/string/update</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>controller</servlet-name>
-    <url-pattern>/user/delete</url-pattern>
+    <url-pattern>/string/delete</url-pattern>
   </servlet-mapping>
   <!-- images -->
   <servlet-mapping>
@@ -34,7 +34,7 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>controller</servlet-name>
-    <url-pattern>/image/list/user</url-pattern>
+    <url-pattern>/image/list/string</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>controller</servlet-name>

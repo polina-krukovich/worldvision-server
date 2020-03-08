@@ -4,5 +4,5 @@ config.properties
 out/
 target/
 .idea/
-logs
+logs/
 *.log

@@ -7,31 +7,41 @@ import com.epam.polinakrukovich.worldvision.command.type.CommandType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * {@link CommandFactory} class is used to create commands based on provided
+ * action's url-pattern.
+ *
+ * @see Command
+ * @see CommandType
+ *
+ * @author Polina Krukovich
+ */
 public class CommandFactory {
     private static final Logger logger = LogManager.getLogger(CommandFactory.class);
 
+    /**
+     * Checks whether the specified action matches one of the existing command
+     * types, creates required command.
+     *
+     * @param action action to perform
+     * @return {@link Command} object.
+     * @throws CommandException if provided action does not match any command type.
+     */
     public static Command createCommand(String action) throws CommandException {
-        CommandType commandType;
-        try {
-            commandType = CommandType.valueOf(action);
-        } catch (IllegalArgumentException e) {
-            logger.error(e.getMessage());
-            throw new CommandException(e.getMessage(), e);
-        }
-        switch (commandType) {
-            case USER_CREATE: return new UserCreateCommand();
-            case USER_READ: return new UserReadCommand();
-            case USER_UPDATE: return new UserUpdateCommand();
-            case USER_DELETE: return new UserDeleteCommand();
-            case IMAGE_CREATE: return new ImageCreateCommand();
-            case IMAGE_LIST_USER: return new ImageListUserCommand();
-            case IMAGE_LIST_QUERY: return new ImageListQueryCommand();
-            case IMAGE_LIST_TOP: return new ImageListTopCommand();
-            case IMAGE_DELETE: return new ImageDeleteCommand();
-            case LIKE_CREATE: return new LikeCreateCommand();
-            case LIKE_DELETE: return new LikeDeleteCommand();
-            case DOWNLOAD_CREATE: return new DownloadCreateCommand();
-            default: throw new CommandException(String.format("No command for action: %s", action));
+        switch (action) {
+            case CommandType.USER_CREATE: return new UserCreateCommand();
+            case CommandType.USER_READ: return new UserReadCommand();
+            case CommandType.USER_UPDATE: return new UserUpdateCommand();
+            case CommandType.USER_DELETE: return new UserDeleteCommand();
+            case CommandType.IMAGE_CREATE: return new ImageCreateCommand();
+            case CommandType.IMAGE_LIST_USER: return new ImageListUserCommand();
+            case CommandType.IMAGE_LIST_QUERY: return new ImageListQueryCommand();
+            case CommandType.IMAGE_LIST_TOP: return new ImageListTopCommand();
+            case CommandType.IMAGE_DELETE: return new ImageDeleteCommand();
+            case CommandType.LIKE_CREATE: return new LikeCreateCommand();
+            case CommandType.LIKE_DELETE: return new LikeDeleteCommand();
+            case CommandType.DOWNLOAD_CREATE: return new DownloadCreateCommand();
+            default: throw new CommandException("No command for action: " + action);
         }
     }
 }
