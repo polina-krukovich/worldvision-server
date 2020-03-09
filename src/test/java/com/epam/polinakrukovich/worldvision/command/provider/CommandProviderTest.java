@@ -10,71 +10,71 @@ import static org.testng.Assert.*;
 public class CommandProviderTest {
 
     @Test
-    public void testCreateCommand_UserCreateCommand() throws CommandException {
+    public void testCreateCommand_UserCreateCommand()  {
+        CommandProvider provider = new CommandProvider();
         // When
-        Command actual = CommandProvider.getCommand("/user/create");
+        Command actual = provider.getCommand("/user/create");
         // Then
         assertTrue(actual instanceof UserCreateCommand);
     }
 
     @Test
-    public void testCreateCommand_UserReadCommand() throws CommandException {
+    public void testCreateCommand_UserReadCommand () {
+        CommandProvider provider = new CommandProvider();
         // When
-        Command actual = CommandProvider.getCommand("/user/read");
+        Command actual = provider.getCommand("/user/verify");
         // Then
         assertTrue(actual instanceof UserVerifyCommand);
     }
 
     @Test
-    public void testCreateCommand_UserUpdateCommand() throws CommandException {
+    public void testCreateCommand_UserDeleteCommand () {
+        CommandProvider provider = new CommandProvider();
         // When
-        Command actual = CommandProvider.getCommand("/user/update");
-        // Then
-        assertTrue(actual instanceof UserUpdateCommand);
-    }
-
-    @Test
-    public void testCreateCommand_UserDeleteCommand() throws CommandException {
-        // When
-        Command actual = CommandProvider.getCommand("/user/delete");
+        Command actual = provider.getCommand("/user/delete");
         // Then
         assertTrue(actual instanceof UserDeleteCommand);
     }
 
     @Test
-    public void testCreateCommand_ImageCreateCommand() throws CommandException {
+    public void testCreateCommand_ImageCreateCommand()  {
+        CommandProvider provider = new CommandProvider();
         // When
-        Command actual = CommandProvider.getCommand("/image/create");
+        Command actual = provider.getCommand("/image/create");
         // Then
         assertTrue(actual instanceof ImageCreateCommand);
     }
 
     @Test
-    public void testCreateCommand_ImageListQueryCommand() throws CommandException {
+    public void testCreateCommand_ImageListQueryCommand()  {
+        CommandProvider provider = new CommandProvider();
         // When
-        Command actual = CommandProvider.getCommand("/image/list/query");
+        Command actual = provider.getCommand("/image/list/query");
         // Then
         assertTrue(actual instanceof ImageListQueryCommand);
     }
 
     @Test
-    public void testCreateCommand_ImageDeleteCommand() throws CommandException {
+    public void testCreateCommand_ImageDeleteCommand()  {
+        CommandProvider provider = new CommandProvider();
         // When
-        Command actual = CommandProvider.getCommand("/image/delete");
+        Command actual = provider.getCommand("/image/delete");
         // Then
         assertTrue(actual instanceof ImageDeleteCommand);
     }
 
     @Test
-    public void testCreateCommand_LikeCreateCommand() throws CommandException {
+    public void testCreateCommand_LikeCreateCommand()  {
+        CommandProvider provider = new CommandProvider();
         // When
-        Command actual = CommandProvider.getCommand("/like/create");
+        Command actual = provider.getCommand("/like/create");
         // Then
         assertTrue(actual instanceof LikeCreateCommand);
     }
 
     @Test
-    public void testCreateCommand_IncorrectCommand() {
-        assertThrows(CommandException.class, () -> CommandProvider.getCommand("like/create"));
+    public void testCreateCommand_IncorrectCommand_ExpectedNull() {
+        CommandProvider provider = new CommandProvider();
+        assertNull(provider.getCommand("like/create"));
     }
 }

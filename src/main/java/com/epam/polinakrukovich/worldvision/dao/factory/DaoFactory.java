@@ -1,13 +1,7 @@
 package com.epam.polinakrukovich.worldvision.dao.factory;
 
-import com.epam.polinakrukovich.worldvision.dao.DownloadDao;
-import com.epam.polinakrukovich.worldvision.dao.ImageDao;
-import com.epam.polinakrukovich.worldvision.dao.LikeDao;
-import com.epam.polinakrukovich.worldvision.dao.UserDao;
-import com.epam.polinakrukovich.worldvision.dao.impl.SqlDownloadDao;
-import com.epam.polinakrukovich.worldvision.dao.impl.SqlImageDao;
-import com.epam.polinakrukovich.worldvision.dao.impl.SqlLikeDao;
-import com.epam.polinakrukovich.worldvision.dao.impl.SqlUserDao;
+import com.epam.polinakrukovich.worldvision.dao.*;
+import com.epam.polinakrukovich.worldvision.dao.impl.*;
 
 public class DaoFactory {
     private static final class SingletonHolder {
@@ -18,12 +12,20 @@ public class DaoFactory {
     private final ImageDao sqlImageDao;
     private final LikeDao sqlLikeDao;
     private final DownloadDao sqlDownloadDao;
+    private final TagDao sqlTagDao;
+    private final ImageTagDao sqlImageTagDao;
+    private final ColorDao sqlColorDao;
+    private final ImageColorDao sqlImageColorDao;
 
     private DaoFactory() {
         sqlUserDao = new SqlUserDao();
         sqlImageDao = new SqlImageDao();
         sqlLikeDao = new SqlLikeDao();
         sqlDownloadDao = new SqlDownloadDao();
+        sqlTagDao = new SqlTagDao();
+        sqlImageTagDao = new SqlImageTagDao();
+        sqlColorDao = new SqlColorDao();
+        sqlImageColorDao = new SqlImageColorDao();
     }
 
     public static DaoFactory getInstance() {
@@ -44,5 +46,21 @@ public class DaoFactory {
 
     public DownloadDao getDownloadDao() {
         return sqlDownloadDao;
+    }
+
+    public TagDao getTagDao() {
+        return sqlTagDao;
+    }
+
+    public ImageTagDao getImageTagDao() {
+        return sqlImageTagDao;
+    }
+
+    public ColorDao getColorDao() {
+        return sqlColorDao;
+    }
+
+    public ImageColorDao getImageColorDao() {
+        return sqlImageColorDao;
     }
 }

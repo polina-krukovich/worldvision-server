@@ -7,6 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.List;
 
 public abstract class SqlDao {
     private final Logger logger = LogManager.getLogger(getClass());
@@ -26,5 +28,4 @@ public abstract class SqlDao {
     protected void releaseConnection(Connection connection) {
         pool.releaseConnection(connection);
     }
-
 }

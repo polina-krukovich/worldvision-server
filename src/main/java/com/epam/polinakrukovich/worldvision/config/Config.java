@@ -32,6 +32,7 @@ public class Config {
     private String dbUser;
     private String dbPassword;
     private int dbConnectionPoolInitialSize;
+    private int dbConnectionPoolMaxSize;
     private String storageBucketName;
     private String saFilePath;
 
@@ -53,6 +54,7 @@ public class Config {
             dbUser = props.getProperty("dbUser");
             dbPassword = props.getProperty("dbPassword");
             dbConnectionPoolInitialSize = Integer.parseInt(props.getProperty("dbConnectionPoolInitialSize"));
+            dbConnectionPoolMaxSize = Integer.parseInt(props.getProperty("dbConnectionPoolMaxSize"));
             storageBucketName = props.getProperty("storageBucketName");
             saFilePath = props.getProperty("saFilePath");
         } catch (IOException | NullPointerException e) {
@@ -74,6 +76,10 @@ public class Config {
 
     public int getDbConnectionPoolInitialSize() {
         return dbConnectionPoolInitialSize;
+    }
+
+    public int getDbConnectionPoolMaxSize() {
+        return dbConnectionPoolMaxSize;
     }
 
     public String getStorageBucketName() {

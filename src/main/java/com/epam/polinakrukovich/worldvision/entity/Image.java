@@ -1,25 +1,24 @@
 package com.epam.polinakrukovich.worldvision.entity;
 
-import com.google.api.client.util.DateTime;
+
+import org.joda.time.DateTime;
 
 import java.util.Objects;
 
 /**
- * Image is an entity-class for storing full image data.
+ * Entity-class for storing image data.
  *
  * @author Polina Krukovich
  */
 public class Image {
-    private int id;
-    private int userId;
     private String url;
+    private String userId;
     private int likesCount;
     private int downloadsCount;
     private DateTime creationTime;
 
-    public Image(int id, int userId, String url, int likesCount,
+    public Image(String userId, String url, int likesCount,
                  int downloadsCount, DateTime creationTime) {
-        this.id = id;
         this.userId = userId;
         this.url = url;
         this.likesCount = likesCount;
@@ -27,11 +26,7 @@ public class Image {
         this.creationTime = creationTime;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -51,11 +46,7 @@ public class Image {
         return creationTime;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -76,16 +67,11 @@ public class Image {
     }
 
     @Override
-    public java.lang.String toString() {
-        return java.lang.String.format(
-                "%s {" +
-                        "id: %d, " +
-                        "userId: %d, " +
-                        "url: %s, " +
-                        "likesCount: %d, " +
-                        "downloadsCount: %d, " +
-                        "creationTime: %s}",
-                getClass().getSimpleName(), id, userId, url,
+    public String toString() {
+        return String.format(
+                "%s {userId: %s, url: %s, likesCount: %d, " +
+                        "downloadsCount: %d, creationTime: %s}",
+                getClass().getSimpleName(), userId, url,
                 likesCount, downloadsCount, creationTime);
     }
 
@@ -98,8 +84,7 @@ public class Image {
             return false;
         }
         Image image = (Image) o;
-        return id == image.id &&
-                likesCount == image.likesCount &&
+        return likesCount == image.likesCount &&
                 downloadsCount == image.downloadsCount &&
                 Objects.equals(userId, image.userId) &&
                 Objects.equals(url, image.url) &&
@@ -108,7 +93,7 @@ public class Image {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, url, likesCount,
+        return Objects.hash(userId, url, likesCount,
                 downloadsCount, creationTime);
     }
 }

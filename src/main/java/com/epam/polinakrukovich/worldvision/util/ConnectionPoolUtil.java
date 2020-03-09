@@ -2,6 +2,7 @@ package com.epam.polinakrukovich.worldvision.util;
 
 import com.epam.polinakrukovich.worldvision.config.Config;
 import com.epam.polinakrukovich.worldvision.util.exception.UtilException;
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
@@ -33,25 +34,30 @@ public class ConnectionPoolUtil {
     private final Logger logger = LogManager.getLogger();
     private final ReentrantLock lock = new ReentrantLock();
     private List<Connection> connectionPool = new ArrayList<>();
-    private List<Connection> usedConnections = new ArrayList<>();
+    @VisibleForTesting
+    List<Connection> usedConnections = new ArrayList<>();
     private String dbUrl;
     private String dbUser;
     private String dbPassword;
+    private int maxSize;
 
     /**
      * Constructs and initializes the {@link ConnectionPoolUtil} object
      * based on configuration properties stored in {@link Config}.
      */
-    private ConnectionPoolUtil() {
+    @VisibleForTesting
+    ConnectionPoolUtil() {
         Config config = Config.getInstance();
         dbUrl = config.getDbUrl();
         dbUser = config.getDbUser();
         dbPassword = config.getDbPassword();
+        maxSize = config.getDbConnectionPoolMaxSize();
         int initialPoolSize = config.getDbConnectionPoolInitialSize();
         for (int i = 0; i < initialPoolSize; i++) {
             try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
                 connectionPool.add(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 logger.error(e.getMessage());
             }
         }
@@ -84,12 +90,17 @@ public class ConnectionPoolUtil {
         lock.lock();
         try {
             if (connectionPool.isEmpty()) {
-                connectionPool.add(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
+                if (usedConnections.size() < maxSize) {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    connectionPool.add(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
+                } else {
+                    throw new UtilException("Connection Pool reached maximum size.");
+                }
             }
             Connection connection = connectionPool.remove(connectionPool.size() - 1);
             usedConnections.add(connection);
             return connection;
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             logger.error(e.getMessage());
             throw new UtilException(e.getMessage());
         } finally {

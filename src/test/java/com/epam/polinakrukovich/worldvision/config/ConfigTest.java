@@ -27,6 +27,11 @@ public class ConfigTest {
     }
 
     @Test
+    public void testGetDbConnectionPoolMaxSize_ExpectedNotZero() {
+        assertNotEquals(new Config().getDbConnectionPoolMaxSize(), 0);
+    }
+
+    @Test
     public void testGetStorageBucketName_ExpectedNotNull() {
         assertNotNull(new Config().getStorageBucketName());
     }
