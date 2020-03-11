@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface ImageDao {
     void createImage(String url, String userId) throws DaoException;
-    List<Image> readImageByUser(String userId, int pageIndex, int pageSize) throws DaoException;
-    List<Image> readImageTop(int pageIndex, int pageSize) throws DaoException;
-    List<Image> readImageByTag(String tag, int pageIndex, int pageSize) throws DaoException;
-    List<Image> readImageByColor(int colorId, int pageIndex, int pageSize) throws DaoException;
-    List<Image> readImageByCreationTime(int daysPassed, int pageIndex, int pageSize) throws DaoException;
+    Image[] readImageByUser(String userId) throws DaoException;
+    Image[] readImageTop() throws DaoException;
+    Image[] readImageByTag(String tag) throws DaoException;
+    Image[] readImageByColor(int colorId) throws DaoException;
+    Image[] readImageByCreationTime(int daysPassed) throws DaoException;
     void deleteImage(String url) throws DaoException;
 }

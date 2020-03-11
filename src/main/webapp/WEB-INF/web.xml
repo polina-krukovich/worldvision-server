@@ -4,7 +4,16 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-
+  
+  <filter>
+    <filter-name>filter</filter-name>
+    <filter-class>com.epam.polinakrukovich.worldvision.controller.RequestFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>filter</filter-name>
+    <servlet-name>controller</servlet-name>
+  </filter-mapping>
+  
   <servlet>
     <servlet-name>controller</servlet-name>
     <servlet-class>com.epam.polinakrukovich.worldvision.controller.Controller</servlet-class>

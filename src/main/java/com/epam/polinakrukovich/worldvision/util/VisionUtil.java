@@ -26,9 +26,7 @@ public class VisionUtil {
     }
 
     @VisibleForTesting
-    VisionUtil() {
-
-    }
+    VisionUtil() { }
 
     public Set<String> generateTags(String gcsPath) throws UtilException {
         Set<String> tags = new HashSet<>();
