@@ -26,11 +26,11 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>controller</servlet-name>
-    <url-pattern>/user/verify</url-pattern>
+    <url-pattern>/user/delete</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>controller</servlet-name>
-    <url-pattern>/user/delete</url-pattern>
+    <url-pattern>/user/list</url-pattern>
   </servlet-mapping>
   <!-- images -->
   <servlet-mapping>
@@ -43,7 +43,6 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>controller</servlet-name>
-    <!-- tags, color, time -->
     <url-pattern>/image/list/query</url-pattern>
   </servlet-mapping>
   <servlet-mapping>

@@ -3,7 +3,10 @@ package com.epam.polinakrukovich.worldvision.service;
 import com.epam.polinakrukovich.worldvision.dao.UserDao;
 import com.epam.polinakrukovich.worldvision.dao.exception.DaoException;
 import com.epam.polinakrukovich.worldvision.dao.factory.DaoFactory;
+import com.epam.polinakrukovich.worldvision.entity.User;
 import com.epam.polinakrukovich.worldvision.service.exception.ServiceException;
+import com.epam.polinakrukovich.worldvision.util.AuthUtil;
+import com.epam.polinakrukovich.worldvision.util.exception.UtilException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,6 +34,16 @@ public class UserService {
         try {
             dao.deleteUser(userId);
         } catch (DaoException e) {
+            logger.error(e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public User[] listUsers() throws ServiceException {
+        AuthUtil util = AuthUtil.getInstance();
+        try {
+            return util.listUsers();
+        } catch (UtilException e) {
             logger.error(e.getMessage());
             throw new ServiceException(e.getMessage());
         }

@@ -1,18 +1,21 @@
 package com.epam.polinakrukovich.worldvision.util;
 
 import com.epam.polinakrukovich.worldvision.config.Config;
+import com.epam.polinakrukovich.worldvision.entity.User;
 import com.epam.polinakrukovich.worldvision.util.exception.UtilException;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joda.time.DateTime;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -93,5 +96,51 @@ public class AuthUtil {
             logger.error(e.getMessage());
             return false;
         }
+    }
+
+    public User[] listUsers() throws UtilException {
+        ListUsersPage page = null;
+        try {
+            page = FirebaseAuth.getInstance().listUsers(null);
+        } catch (FirebaseAuthException e) {
+            logger.error(e.getMessage());
+            throw new UtilException(e.getMessage());
+        }
+
+        List<User> userList = new ArrayList<>();
+        for (ExportedUserRecord userRecord : page.iterateAll()) {
+            User user = new User();
+
+            user.setUid(userRecord.getUid());
+            user.setEmail(userRecord.getEmail());
+            user.setDisplayName(userRecord.getDisplayName());
+            user.setPhone(userRecord.getPhoneNumber());
+            user.setPhotoUrl(userRecord.getPhotoUrl());
+            user.setDisabled(userRecord.isDisabled());
+
+            UserMetadata meta = userRecord.getUserMetadata();
+            String format = "dd MMM YYYY HH:mm:ss";
+
+            long creationTimestamp = meta.getCreationTimestamp();
+            DateTime creationTime = new DateTime(creationTimestamp);
+            user.setCreationTime(creationTime.toString(format));
+
+            long lastSignInTimestamp = meta.getLastSignInTimestamp();
+            DateTime lastSignInTime = new DateTime(lastSignInTimestamp);
+            user.setLastSignInTime(lastSignInTime.toString(format));
+
+            UserInfo[] providerData = userRecord.getProviderData();
+            String[] providers = new String[userRecord.getProviderData().length];
+            for (int i = 0; i < providerData.length; i++) {
+                providers[i] = providerData[i].getProviderId();
+            }
+            user.setProviders(providers);
+
+            userList.add(user);
+        }
+
+        User[] users = new User[userList.size()];
+        userList.toArray(users);
+        return users;
     }
 }
