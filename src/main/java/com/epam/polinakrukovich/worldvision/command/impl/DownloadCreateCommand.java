@@ -7,10 +7,19 @@ import com.epam.polinakrukovich.worldvision.service.exception.ServiceException;
 import com.epam.polinakrukovich.worldvision.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Retrieves information about downloaded image (image URL and
+ * ID of the user who downloaded the image) from request parameters
+ * and calls {@link DownloadService#createDownload(String, String)}
+ * for further processing.
+ *
+ * @see DownloadService#createDownload(String, String)
+ *
+ * @author Polina Krukovich
+ */
 public class DownloadCreateCommand implements Command {
 
     Logger logger = LogManager.getLogger(getClass());

@@ -1,6 +1,5 @@
 package com.epam.polinakrukovich.worldvision.util;
 
-import com.epam.polinakrukovich.worldvision.entity.Color;
 import com.epam.polinakrukovich.worldvision.util.exception.UtilException;
 import com.google.cloud.vision.v1.*;
 import com.google.cloud.vision.v1.Feature.Type;

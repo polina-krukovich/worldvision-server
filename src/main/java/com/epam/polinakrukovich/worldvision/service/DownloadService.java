@@ -7,6 +7,10 @@ import com.epam.polinakrukovich.worldvision.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Connects Command and Data Access layers for performing operations
+ * with Download instances.
+ */
 public class DownloadService {
     Logger logger = LogManager.getLogger(getClass());
 

@@ -11,9 +11,9 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * {@link AuthUtil} class provides functionality for managing users using
@@ -48,8 +48,9 @@ public class AuthUtil {
     @VisibleForTesting
     AuthUtil() {
         Config config = Config.getInstance();
-        File saFile = new File(config.getSaFilePath());
-        try (FileInputStream stream = new FileInputStream(saFile)) {
+        String saFilePath = config.getSaFilePath();
+        try (InputStream stream = Objects.requireNonNull(
+                AuthUtil.class.getClassLoader().getResourceAsStream(saFilePath))) {
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(stream))
                     .build();
@@ -75,6 +76,22 @@ public class AuthUtil {
         } catch (FirebaseAuthException e) {
             logger.error(e.getMessage());
             throw new UtilException(e.getMessage());
+        }
+    }
+
+    /**
+     * Checks the existence of the user with provided userId.
+     *
+     * @param userId user ID
+     * @return {@code true} if user exists,
+     *         {@code false} otherwise.
+     */
+    public boolean checkIfUserExists(String userId) {
+        try {
+            return firebaseAuth.getUser(userId) != null;
+        } catch (FirebaseAuthException | IllegalArgumentException e) {
+            logger.error(e.getMessage());
+            return false;
         }
     }
 }

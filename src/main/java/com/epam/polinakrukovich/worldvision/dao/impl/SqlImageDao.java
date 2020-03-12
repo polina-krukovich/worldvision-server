@@ -7,7 +7,6 @@ import com.epam.polinakrukovich.worldvision.entity.Image;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +134,8 @@ public class SqlImageDao extends SqlDao implements ImageDao {
             int downloadsCount = rs.getInt("downloads_count");
             Timestamp timestamp = rs.getTimestamp("creation_time");
             DateTime creationTime = DateTime.parse(timestamp.toLocalDateTime().toString());
-            Image image = new Image(userId, url, downloadsCount, creationTime);
+            String tags = rs.getString("tags");
+            Image image = new Image(url, userId, downloadsCount, creationTime, tags);
             imageList.add(image);
         }
         Image[] images = new Image[imageList.size()];

@@ -9,6 +9,7 @@ import com.google.cloud.storage.Acl.Role;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,7 +39,8 @@ public class StorageUtil {
     }
 
     private Logger logger = LogManager.getLogger(getClass());
-    private Storage storage;
+    @VisibleForTesting
+    Storage storage;
     private String bucketName;
 
     public static StorageUtil getInstance() {
@@ -50,7 +51,8 @@ public class StorageUtil {
      * Constructs {@link StorageUtil} object and initializes
      * Google Cloud Storage API.
      */
-    private StorageUtil() {
+    @VisibleForTesting
+    StorageUtil() {
         Config config = Config.getInstance();
         String saFilePath = config.getSaFilePath();
         try (InputStream stream = Objects.requireNonNull(

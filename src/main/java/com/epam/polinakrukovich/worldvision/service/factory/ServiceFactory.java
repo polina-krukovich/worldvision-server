@@ -4,6 +4,9 @@ import com.epam.polinakrukovich.worldvision.service.DownloadService;
 import com.epam.polinakrukovich.worldvision.service.ImageService;
 import com.epam.polinakrukovich.worldvision.service.UserService;
 
+/**
+ * This class is used to produce and give access to Service Layer classes.
+ */
 public class ServiceFactory {
     private static final class SingletonHolder {
         private static final ServiceFactory instance = new ServiceFactory();

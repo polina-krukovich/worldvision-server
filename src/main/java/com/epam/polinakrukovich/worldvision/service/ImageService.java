@@ -10,24 +10,31 @@ import com.epam.polinakrukovich.worldvision.entity.Color;
 import com.epam.polinakrukovich.worldvision.entity.Image;
 import com.epam.polinakrukovich.worldvision.service.exception.ServiceException;
 import com.epam.polinakrukovich.worldvision.util.NearestColorUtil;
-import com.epam.polinakrukovich.worldvision.util.StorageUtil;
 import com.epam.polinakrukovich.worldvision.util.TranslateUtil;
 import com.epam.polinakrukovich.worldvision.util.VisionUtil;
 import com.epam.polinakrukovich.worldvision.util.exception.UtilException;
 import com.google.cloud.vision.v1.ColorInfo;
-import org.apache.commons.fileupload.FileItemStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.javatuples.Pair;
-
-import java.io.InputStream;
 import java.util.*;
 
+/**
+ * Connects Command and Data Access layers for performing operations
+ * with Image instances. Uses Utils, such as {@link VisionUtil},
+ * {@link NearestColorUtil}, {@link TranslateUtil} for image processing.
+ */
 public class ImageService {
     Logger logger = LogManager.getLogger(getClass());
 
-    public void createImage(String url, String gcsPath, String uid) throws ServiceException {
-        saveImage(url, uid);
+    /**
+     * Detects image tags and colors, uses DAO to save image data.
+     * @param url image URL.
+     * @param gcsPath Google Cloud Storage Path.
+     * @param userId user ID.
+     * @throws ServiceException
+     */
+    public void createImage(String url, String gcsPath, String userId) throws ServiceException {
+        saveImage(url, userId);
         Set<String> tags = generateTags(gcsPath);
         saveTags(url, tags);
         Map<Color, Double> colors = detectColors(gcsPath);
@@ -56,6 +63,14 @@ public class ImageService {
         }
     }
 
+    /**
+     * Retrieves images that match specified tag.
+     * P.S. tags are stored in English, so they are
+     * translated if provided in another language.
+     * @param tag tag.
+     * @return images matching tag.
+     * @throws ServiceException
+     */
     public Image[] listImagesByTag(String tag) throws ServiceException {
         TranslateUtil util = TranslateUtil.getInstance();
         String lang = util.detectLanguage(tag);

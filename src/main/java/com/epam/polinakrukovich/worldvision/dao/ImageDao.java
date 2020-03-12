@@ -2,10 +2,10 @@ package com.epam.polinakrukovich.worldvision.dao;
 
 import com.epam.polinakrukovich.worldvision.dao.exception.DaoException;
 import com.epam.polinakrukovich.worldvision.entity.Image;
-import org.joda.time.DateTime;
 
-import java.util.List;
-
+/**
+ * Specifies basic actions with Image instance.
+ */
 public interface ImageDao {
     void createImage(String url, String userId) throws DaoException;
     Image[] readImageByUser(String userId) throws DaoException;

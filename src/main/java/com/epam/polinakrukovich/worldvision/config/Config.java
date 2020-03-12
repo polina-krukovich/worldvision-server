@@ -3,9 +3,6 @@ package com.epam.polinakrukovich.worldvision.config;
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -28,13 +25,18 @@ public class Config {
     private final String CONFIG_FILE_NAME = "config.properties";
     private Logger logger = LogManager.getLogger(getClass());
 
-    private String dbUrl;
-    private String dbUser;
-    private String dbPassword;
-    private int dbConnectionPoolInitialSize;
-    private int dbConnectionPoolMaxSize;
-    private String storageBucketName;
-    private String saFilePath;
+    @VisibleForTesting
+    String dbUrl;
+    @VisibleForTesting
+    String dbUser;
+    @VisibleForTesting
+    String dbPassword;
+    @VisibleForTesting
+    int dbConnectionPoolInitialSize;
+    @VisibleForTesting
+    String storageBucketName;
+    @VisibleForTesting
+    String saFilePath;
 
     public static Config getInstance() {
         return SingletonHolder.instance;
@@ -54,7 +56,6 @@ public class Config {
             dbUser = props.getProperty("dbUser");
             dbPassword = props.getProperty("dbPassword");
             dbConnectionPoolInitialSize = Integer.parseInt(props.getProperty("dbConnectionPoolInitialSize"));
-            dbConnectionPoolMaxSize = Integer.parseInt(props.getProperty("dbConnectionPoolMaxSize"));
             storageBucketName = props.getProperty("storageBucketName");
             saFilePath = props.getProperty("saFilePath");
         } catch (IOException | NullPointerException e) {
@@ -76,10 +77,6 @@ public class Config {
 
     public int getDbConnectionPoolInitialSize() {
         return dbConnectionPoolInitialSize;
-    }
-
-    public int getDbConnectionPoolMaxSize() {
-        return dbConnectionPoolMaxSize;
     }
 
     public String getStorageBucketName() {

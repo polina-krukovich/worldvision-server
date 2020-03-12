@@ -8,11 +8,7 @@ import com.google.cloud.vision.v1.ColorInfo;
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * {@link NearestColorUtil} provides basic functionality for calculating

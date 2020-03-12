@@ -3,6 +3,12 @@ package com.epam.polinakrukovich.worldvision.dao.factory;
 import com.epam.polinakrukovich.worldvision.dao.*;
 import com.epam.polinakrukovich.worldvision.dao.impl.*;
 
+/**
+ * This factory class is used for creating and accessing
+ * DAO instances.
+ *
+ * @author Polina Krukovich
+ */
 public class DaoFactory {
     private static final class SingletonHolder {
         private static final DaoFactory instance = new DaoFactory();

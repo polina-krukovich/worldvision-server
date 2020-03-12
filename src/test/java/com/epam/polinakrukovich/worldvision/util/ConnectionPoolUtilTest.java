@@ -86,17 +86,6 @@ public class ConnectionPoolUtilTest {
     }
 
     @Test
-    public void testGetConnection_WhenConnectionMaxCountReached() throws UtilException {
-        ConnectionPoolUtil pool = new ConnectionPoolUtil();
-        Config config = Config.getInstance();
-        int maxSize = config.getDbConnectionPoolMaxSize();
-        for (int i = 0; i < maxSize; i ++) {
-            pool.getConnection();
-        }
-        assertThrows(UtilException.class, () -> pool.getConnection());
-    }
-
-    @Test
     public void testGetConnection_WhenMultipleThreadsCall_ExpectedEqualThreadsAndConnectionsCount() throws InterruptedException {
         ConnectionPoolUtil pool = new ConnectionPoolUtil();
         int threadsAmount = 30;

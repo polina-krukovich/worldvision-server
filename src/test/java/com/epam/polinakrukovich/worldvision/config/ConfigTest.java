@@ -7,37 +7,38 @@ import static org.testng.Assert.*;
 public class ConfigTest {
 
     @Test
-    public void testGetDbUrl_ExpectedNotNull() {
-        assertNotNull(new Config().getDbUrl());
+    public void testDbUrl_ExpectedNotNull() {
+        Config config = new Config();
+        assertNotNull(config.dbUrl);
     }
 
     @Test
-    public void testGetDbUser_ExpectedNotNull() {
-        assertNotNull(new Config().getDbUser());
+    public void testDbUser_ExpectedNotNull() {
+        Config config = new Config();
+        assertNotNull(config.dbUser);
     }
 
     @Test
-    public void testGetDbPassword_ExpectedNotNull() {
-        assertNotNull(new Config().getDbPassword());
+    public void testDbPassword_ExpectedNotNull() {
+        Config config = new Config();
+        assertNotNull(config.dbPassword);
     }
 
     @Test
     public void testGetDbConnectionPoolInitialSize_ExpectedNotZero() {
-        assertNotEquals(new Config().getDbConnectionPoolInitialSize(), 0);
-    }
-
-    @Test
-    public void testGetDbConnectionPoolMaxSize_ExpectedNotZero() {
-        assertNotEquals(new Config().getDbConnectionPoolMaxSize(), 0);
+        Config config = new Config();
+        assertNotEquals(config.dbConnectionPoolInitialSize, 0);
     }
 
     @Test
     public void testGetStorageBucketName_ExpectedNotNull() {
-        assertNotNull(new Config().getStorageBucketName());
+        Config config = new Config();
+        assertNotNull(config.storageBucketName);
     }
 
     @Test
     public void testGetSaFilePath_ExpectedNotNull() {
-        assertNotNull(new Config().getSaFilePath());
+        Config config = new Config();
+        assertNotNull(config.saFilePath);
     }
 }

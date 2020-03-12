@@ -9,11 +9,17 @@ import com.epam.polinakrukovich.worldvision.service.factory.ServiceFactory;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Returns all images ordered by popularity in JSON format.
+ *
+ * @see ImageService#listTopImages()
+ *
+ * @author Polina Krukovich
+ */
 public class ImageListTopCommand implements Command {
 
     private Logger logger = LogManager.getLogger(getClass());

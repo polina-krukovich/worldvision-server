@@ -15,7 +15,8 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * {@link ConnectionPoolUtil} class provides the minimal functionality expected from
  * a typical connection pooling implementation. The class initializes a connection
- * pool based on an ArrayList that stores 10 connections, which can be easily reused.
+ * pool based on an ArrayList that stores minimum number of connections, which can
+ * be reused.
  *
  * Once the pool is created, connections are fetched from the pool, so there's no need
  * to create new ones. When a connection is released, it's actually returned back to
@@ -39,7 +40,6 @@ public class ConnectionPoolUtil {
     private String dbUrl;
     private String dbUser;
     private String dbPassword;
-    private int maxSize;
 
     /**
      * Constructs and initializes the {@link ConnectionPoolUtil} object
@@ -51,7 +51,6 @@ public class ConnectionPoolUtil {
         dbUrl = config.getDbUrl();
         dbUser = config.getDbUser();
         dbPassword = config.getDbPassword();
-        maxSize = config.getDbConnectionPoolMaxSize();
         int initialPoolSize = config.getDbConnectionPoolInitialSize();
         for (int i = 0; i < initialPoolSize; i++) {
             try {
@@ -83,8 +82,7 @@ public class ConnectionPoolUtil {
      * Retrieves pooled connection. If pool is empty, creates a new one.
      *
      * @return {@link Connection} object.
-     * @throws UtilException if creation of a new connection using
-     * {@link DriverManager#getConnection(String, String, String)} fails.
+     * @throws UtilException
      */
     public Connection getConnection() throws UtilException {
         lock.lock();

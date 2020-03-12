@@ -7,10 +7,17 @@ import com.epam.polinakrukovich.worldvision.service.exception.ServiceException;
 import com.epam.polinakrukovich.worldvision.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Retrieves URL of the image to delete from request parameters
+ * and calls {@link ImageService} for further processing.
+ *
+ * @see ImageService
+ *
+ * @author Polina Krukovich
+ */
 public class ImageDeleteCommand implements Command {
 
     Logger logger = LogManager.getLogger(getClass());

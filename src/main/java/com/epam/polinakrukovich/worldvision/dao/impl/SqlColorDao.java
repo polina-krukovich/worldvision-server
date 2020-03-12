@@ -6,8 +6,6 @@ import com.epam.polinakrukovich.worldvision.dao.exception.DaoException;
 import com.epam.polinakrukovich.worldvision.entity.Color;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,27 +35,5 @@ public class SqlColorDao extends SqlDao implements ColorDao {
         }
         releaseConnection(connection);
         return colors;
-    }
-
-    @Override
-    public Color readColorById(int id) throws DaoException {
-        String query = "CALL SelectColorById(?);";
-        Connection connection = tryGetConnection();
-        Color color = null;
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                int red = rs.getInt("red");
-                int green = rs.getInt("green");
-                int blue = rs.getInt("blue");
-                color = new Color(id, red, green, blue);
-            }
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-            throw new DaoException(e.getMessage());
-        }
-        releaseConnection(connection);
-        return color;
     }
 }

@@ -19,15 +19,6 @@ public class CommandProviderTest {
     }
 
     @Test
-    public void testCreateCommand_UserReadCommand () {
-        CommandProvider provider = new CommandProvider();
-        // When
-        Command actual = provider.getCommand("/user/verify");
-        // Then
-        assertTrue(actual instanceof UserVerifyCommand);
-    }
-
-    @Test
     public void testCreateCommand_UserDeleteCommand () {
         CommandProvider provider = new CommandProvider();
         // When
@@ -61,12 +52,5 @@ public class CommandProviderTest {
         Command actual = provider.getCommand("/image/delete");
         // Then
         assertTrue(actual instanceof ImageDeleteCommand);
-    }
-
-
-    @Test
-    public void testCreateCommand_IncorrectCommand_ExpectedNull() {
-        CommandProvider provider = new CommandProvider();
-        assertNull(provider.getCommand("like/create"));
     }
 }

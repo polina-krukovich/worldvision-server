@@ -9,15 +9,31 @@ import com.epam.polinakrukovich.worldvision.service.factory.ServiceFactory;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This command is used to get all images matching the specified query.
+ * Three parameters are taken into account:
+ *      1) Tags - keywords describing the image;
+ *      2) Color - one of the image primary colors;
+ *      3) Creation Time - number of days passed since the image was uploaded.
+ * P.S. Mot all parameters may be specified.
+ *
+ * It uses methods of {@link ImageService} class to get images matching individual
+ * parameters and then merges them using Set operations.
+ *
+ * Returns JSON result.
+ *
+ * @see Set
+ * @see ImageService
+ *
+ * @author Polina Krukovich
+ */
 public class ImageListQueryCommand implements Command {
 
     private Logger logger = LogManager.getLogger(getClass());

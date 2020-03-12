@@ -1,7 +1,7 @@
 package com.epam.polinakrukovich.worldvision.command.exception;
 
 /**
- * Exception class for all server commands.
+ * Exception class for command layer.
  *
  * @see Exception
  *

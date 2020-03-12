@@ -1,11 +1,9 @@
 package com.epam.polinakrukovich.worldvision.command.provider;
 
 import com.epam.polinakrukovich.worldvision.command.Command;
-import com.epam.polinakrukovich.worldvision.command.exception.CommandException;
 import com.epam.polinakrukovich.worldvision.command.impl.*;
 import com.epam.polinakrukovich.worldvision.command.type.CommandType;
 import com.google.common.annotations.VisibleForTesting;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +30,6 @@ public class CommandProvider {
     @VisibleForTesting
     CommandProvider() {
         repository.put(CommandType.USER_CREATE, new UserCreateCommand());
-        repository.put(CommandType.USER_VERIFY, new UserVerifyCommand());
         repository.put(CommandType.USER_DELETE, new UserDeleteCommand());
         repository.put(CommandType.IMAGE_CREATE, new ImageCreateCommand());
         repository.put(CommandType.IMAGE_LIST_USER, new ImageListUserCommand());
