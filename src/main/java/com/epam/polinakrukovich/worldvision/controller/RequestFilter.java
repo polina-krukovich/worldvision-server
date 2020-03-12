@@ -1,8 +1,8 @@
 package com.epam.polinakrukovich.worldvision.controller;
 
 import javax.servlet.*;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RequestFilter implements Filter {
@@ -15,14 +15,9 @@ public class RequestFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
-        Cookie[] cookies = req.getCookies();
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                // do something
-            }
-        } else {
-            // do something
-        }
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "*");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","*");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Headers","*");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

@@ -132,11 +132,10 @@ public class SqlImageDao extends SqlDao implements ImageDao {
         while (rs.next()) {
             String url = rs.getString("url");
             String userId = rs.getString("user_id");
-            int likesCount = rs.getInt("likes_count");
             int downloadsCount = rs.getInt("downloads_count");
             Timestamp timestamp = rs.getTimestamp("creation_time");
             DateTime creationTime = DateTime.parse(timestamp.toLocalDateTime().toString());
-            Image image = new Image(userId, url, likesCount, downloadsCount, creationTime);
+            Image image = new Image(userId, url, downloadsCount, creationTime);
             imageList.add(image);
         }
         Image[] images = new Image[imageList.size()];

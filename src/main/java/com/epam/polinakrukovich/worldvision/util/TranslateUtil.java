@@ -2,6 +2,8 @@ package com.epam.polinakrukovich.worldvision.util;
 
 import com.epam.polinakrukovich.worldvision.config.Config;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
+import com.google.cloud.storage.StorageOptions;
 import com.google.cloud.translate.Detection;
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
@@ -13,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * {@link TranslateUtil} class contains text translation functions implemented
@@ -43,8 +47,9 @@ public class TranslateUtil {
     @VisibleForTesting
     TranslateUtil() {
         Config config = Config.getInstance();
-        File saFile = new File(config.getSaFilePath());
-        try (FileInputStream stream = new FileInputStream(saFile)) {
+        String saFilePath = config.getSaFilePath();
+        try (InputStream stream = Objects.requireNonNull(
+                TranslateUtil.class.getClassLoader().getResourceAsStream(saFilePath))) {
             TranslateOptions options = TranslateOptions.newBuilder()
                     .setCredentials(GoogleCredentials.fromStream(stream))
                     .build();

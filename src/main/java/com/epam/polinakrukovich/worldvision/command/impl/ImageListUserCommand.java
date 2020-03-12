@@ -23,7 +23,6 @@ public class ImageListUserCommand implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-        resp.addHeader("Access-Control-Allow-Origin", "*");
 
         ServiceFactory factory = ServiceFactory.getInstance();
         ImageService service = factory.getImageService();

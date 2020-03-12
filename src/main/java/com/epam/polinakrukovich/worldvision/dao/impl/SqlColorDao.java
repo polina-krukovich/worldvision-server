@@ -4,7 +4,6 @@ import com.epam.polinakrukovich.worldvision.dao.ColorDao;
 import com.epam.polinakrukovich.worldvision.dao.SqlDao;
 import com.epam.polinakrukovich.worldvision.dao.exception.DaoException;
 import com.epam.polinakrukovich.worldvision.entity.Color;
-import com.epam.polinakrukovich.worldvision.entity.Like;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;

@@ -90,12 +90,8 @@ public class ConnectionPoolUtil {
         lock.lock();
         try {
             if (connectionPool.isEmpty()) {
-                if (usedConnections.size() < maxSize) {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    connectionPool.add(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
-                } else {
-                    throw new UtilException("Connection Pool reached maximum size.");
-                }
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                connectionPool.add(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
             }
             Connection connection = connectionPool.remove(connectionPool.size() - 1);
             usedConnections.add(connection);

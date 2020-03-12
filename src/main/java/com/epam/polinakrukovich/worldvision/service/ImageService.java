@@ -11,6 +11,7 @@ import com.epam.polinakrukovich.worldvision.entity.Image;
 import com.epam.polinakrukovich.worldvision.service.exception.ServiceException;
 import com.epam.polinakrukovich.worldvision.util.NearestColorUtil;
 import com.epam.polinakrukovich.worldvision.util.StorageUtil;
+import com.epam.polinakrukovich.worldvision.util.TranslateUtil;
 import com.epam.polinakrukovich.worldvision.util.VisionUtil;
 import com.epam.polinakrukovich.worldvision.util.exception.UtilException;
 import com.google.cloud.vision.v1.ColorInfo;
@@ -38,6 +39,66 @@ public class ImageService {
         ImageDao dao = factory.getImageDao();
         try {
             return dao.readImageByUser(uid);
+        } catch (DaoException e) {
+            logger.error(e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Image[] listTopImages() throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        ImageDao dao = factory.getImageDao();
+        try {
+            return dao.readImageTop();
+        } catch (DaoException e) {
+            logger.error(e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Image[] listImagesByTag(String tag) throws ServiceException {
+        TranslateUtil util = TranslateUtil.getInstance();
+        String lang = util.detectLanguage(tag);
+        if (!"en".equals(lang)) {
+            tag = util.translate(lang, "en", tag);
+        }
+        DaoFactory factory = DaoFactory.getInstance();
+        ImageDao dao = factory.getImageDao();
+        try {
+            return dao.readImageByTag(tag);
+        } catch (DaoException e) {
+            logger.error(e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Image[] listImagesByColor(int colorId) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        ImageDao dao = factory.getImageDao();
+        try {
+            return dao.readImageByColor(colorId);
+        } catch (DaoException e) {
+            logger.error(e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Image[] listImagesByCreationTime(int daysPassed) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        ImageDao dao = factory.getImageDao();
+        try {
+            return dao.readImageByCreationTime(daysPassed);
+        } catch (DaoException e) {
+            logger.error(e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public void deleteImage(String imageUrl) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        ImageDao dao = factory.getImageDao();
+        try {
+            dao.deleteImage(imageUrl);
         } catch (DaoException e) {
             logger.error(e.getMessage());
             throw new ServiceException(e.getMessage());

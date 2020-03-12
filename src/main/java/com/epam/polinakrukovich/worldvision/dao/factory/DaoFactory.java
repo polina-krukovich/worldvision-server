@@ -10,7 +10,6 @@ public class DaoFactory {
 
     private final UserDao sqlUserDao;
     private final ImageDao sqlImageDao;
-    private final LikeDao sqlLikeDao;
     private final DownloadDao sqlDownloadDao;
     private final TagDao sqlTagDao;
     private final ImageTagDao sqlImageTagDao;
@@ -20,7 +19,6 @@ public class DaoFactory {
     private DaoFactory() {
         sqlUserDao = new SqlUserDao();
         sqlImageDao = new SqlImageDao();
-        sqlLikeDao = new SqlLikeDao();
         sqlDownloadDao = new SqlDownloadDao();
         sqlTagDao = new SqlTagDao();
         sqlImageTagDao = new SqlImageTagDao();
@@ -38,10 +36,6 @@ public class DaoFactory {
 
     public ImageDao getImageDao() {
         return sqlImageDao;
-    }
-
-    public LikeDao getLikeDao() {
-        return sqlLikeDao;
     }
 
     public DownloadDao getDownloadDao() {

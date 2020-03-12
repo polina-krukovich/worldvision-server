@@ -63,14 +63,6 @@ public class CommandProviderTest {
         assertTrue(actual instanceof ImageDeleteCommand);
     }
 
-    @Test
-    public void testCreateCommand_LikeCreateCommand()  {
-        CommandProvider provider = new CommandProvider();
-        // When
-        Command actual = provider.getCommand("/like/create");
-        // Then
-        assertTrue(actual instanceof LikeCreateCommand);
-    }
 
     @Test
     public void testCreateCommand_IncorrectCommand_ExpectedNull() {

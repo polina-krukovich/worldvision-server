@@ -39,8 +39,6 @@ public class CommandProvider {
         repository.put(CommandType.IMAGE_LIST_TOP, new ImageListTopCommand());
         repository.put(CommandType.IMAGE_LIST_QUERY, new ImageListQueryCommand());
         repository.put(CommandType.IMAGE_DELETE, new ImageDeleteCommand());
-        repository.put(CommandType.LIKE_CREATE, new LikeCreateCommand());
-        repository.put(CommandType.LIKE_DELETE, new LikeDeleteCommand());
         repository.put(CommandType.DOWNLOAD_CREATE, new DownloadCreateCommand());
     }
 

@@ -26,7 +26,6 @@ public class ImageCreateCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        resp.addHeader("Access-Control-Allow-Origin", "*");
         try {
             FileItemIterator iter = new ServletFileUpload().getItemIterator(req);
             String uid = null;
@@ -46,6 +45,7 @@ public class ImageCreateCommand implements Command {
             ImageService service = factory.getImageService();
             service.createImage(url, gcsPath, uid);
         } catch (FileUploadException | ServiceException | IOException e) {
+            System.out.println(e.getMessage());
             logger.error(e.getMessage());
             throw new CommandException(e.getMessage());
         }
@@ -56,6 +56,7 @@ public class ImageCreateCommand implements Command {
         try {
             return util.uploadFile(item);
         } catch (UtilException e) {
+            System.out.println(e.getMessage());
             logger.error(e.getMessage());
             throw new CommandException(e.getMessage());
         }

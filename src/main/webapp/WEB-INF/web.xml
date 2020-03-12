@@ -54,15 +54,6 @@
     <servlet-name>controller</servlet-name>
     <url-pattern>/image/delete</url-pattern>
   </servlet-mapping>
-  <!-- likes -->
-  <servlet-mapping>
-    <servlet-name>controller</servlet-name>
-    <url-pattern>/like/create</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>controller</servlet-name>
-    <url-pattern>/like/delete</url-pattern>
-  </servlet-mapping>
   <!-- downloads -->
   <servlet-mapping>
     <servlet-name>controller</servlet-name>

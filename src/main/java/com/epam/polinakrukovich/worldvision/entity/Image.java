@@ -13,15 +13,12 @@ import java.util.Objects;
 public class Image {
     private String url;
     private String userId;
-    private int likesCount;
     private int downloadsCount;
     private DateTime creationTime;
 
-    public Image(String userId, String url, int likesCount,
-                 int downloadsCount, DateTime creationTime) {
+    public Image(String userId, String url, int downloadsCount, DateTime creationTime) {
         this.userId = userId;
         this.url = url;
-        this.likesCount = likesCount;
         this.downloadsCount = downloadsCount;
         this.creationTime = creationTime;
     }
@@ -32,10 +29,6 @@ public class Image {
 
     public String getUrl() {
         return url;
-    }
-
-    public int getLikesCount() {
-        return likesCount;
     }
 
     public int getDownloadsCount() {
@@ -54,10 +47,6 @@ public class Image {
         this.url = url;
     }
 
-    public void setLikesCount(int likesCount) {
-        this.likesCount = likesCount;
-    }
-
     public void setDownloadsCount(int downloadsCount) {
         this.downloadsCount = downloadsCount;
     }
@@ -69,10 +58,8 @@ public class Image {
     @Override
     public String toString() {
         return String.format(
-                "%s {userId: %s, url: %s, likesCount: %d, " +
-                        "downloadsCount: %d, creationTime: %s}",
-                getClass().getSimpleName(), userId, url,
-                likesCount, downloadsCount, creationTime);
+                "%s {userId: %s, url: %s, downloadsCount: %d, creationTime: %s}",
+                getClass().getSimpleName(), userId, url, downloadsCount, creationTime);
     }
 
     @Override
@@ -84,8 +71,7 @@ public class Image {
             return false;
         }
         Image image = (Image) o;
-        return likesCount == image.likesCount &&
-                downloadsCount == image.downloadsCount &&
+        return downloadsCount == image.downloadsCount &&
                 Objects.equals(userId, image.userId) &&
                 Objects.equals(url, image.url) &&
                 Objects.equals(creationTime, image.creationTime);
@@ -93,7 +79,6 @@ public class Image {
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, url, likesCount,
-                downloadsCount, creationTime);
+        return Objects.hash(userId, url, downloadsCount, creationTime);
     }
 }
