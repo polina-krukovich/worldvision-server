@@ -58,4 +58,8 @@
     <servlet-name>controller</servlet-name>
     <url-pattern>/download/create</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>controller</servlet-name>
+    <url-pattern>/download/list/time</url-pattern>
+  </servlet-mapping>
 </web-app>

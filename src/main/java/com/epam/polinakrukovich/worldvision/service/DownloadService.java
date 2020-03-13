@@ -24,4 +24,15 @@ public class DownloadService {
             throw new ServiceException(e.getMessage());
         }
     }
+
+    public int readDownloadsCountByCreationTime(int daysPassed) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        DownloadDao dao = factory.getDownloadDao();
+        try {
+            return dao.readDownloadsCountByCreationTime(daysPassed);
+        } catch (DaoException e) {
+            logger.error(e.getMessage());
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

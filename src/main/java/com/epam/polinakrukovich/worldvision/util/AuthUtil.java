@@ -8,10 +8,10 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.*;
+import com.google.firebase.auth.UserRecord.CreateRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -142,5 +142,27 @@ public class AuthUtil {
         User[] users = new User[userList.size()];
         userList.toArray(users);
         return users;
+    }
+
+    public String createUser(String email, String password) throws UtilException {
+        CreateRequest request = new CreateRequest()
+                .setEmail(email)
+                .setPassword(password);
+        try {
+            UserRecord userRecord = firebaseAuth.createUser(request);
+            return userRecord.getUid();
+        } catch (FirebaseAuthException e) {
+            logger.error(e.getMessage());
+            throw new UtilException(e.getMessage());
+        }
+    }
+
+    public void deleteUser(String userId) throws UtilException {
+        try {
+            firebaseAuth.deleteUser(userId);
+        } catch (FirebaseAuthException e) {
+            logger.error(e.getMessage());
+            throw new UtilException(e.getMessage());
+        }
     }
 }

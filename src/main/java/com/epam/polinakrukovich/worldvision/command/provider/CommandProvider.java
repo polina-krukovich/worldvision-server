@@ -31,12 +31,14 @@ public class CommandProvider {
     CommandProvider() {
         repository.put(CommandType.USER_CREATE, new UserCreateCommand());
         repository.put(CommandType.USER_DELETE, new UserDeleteCommand());
+        repository.put(CommandType.USER_LIST, new UserListCommand());
         repository.put(CommandType.IMAGE_CREATE, new ImageCreateCommand());
         repository.put(CommandType.IMAGE_LIST_USER, new ImageListUserCommand());
         repository.put(CommandType.IMAGE_LIST_TOP, new ImageListTopCommand());
         repository.put(CommandType.IMAGE_LIST_QUERY, new ImageListQueryCommand());
         repository.put(CommandType.IMAGE_DELETE, new ImageDeleteCommand());
         repository.put(CommandType.DOWNLOAD_CREATE, new DownloadCreateCommand());
+        repository.put(CommandType.DOWNLOAD_LIST_CREATION_TIME, new DownloadListTimeCommand());
     }
 
     /**
